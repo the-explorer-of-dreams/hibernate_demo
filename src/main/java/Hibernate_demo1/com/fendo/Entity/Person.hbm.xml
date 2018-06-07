@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="Hibernate_demo1.com.fendo.Entity.Person" table="person">
+        <id name="id">
+            <!--外键生成机制，引用idCard对象的主键作为Person数据表的主键-->
+            <!-- 采用foreign生成策略，foreign会取得关联对象的标识 -->
+            <generator class="foreign">
+                <!-- property只关联对象 -->
+                <param name="property">idCard</param>
+            </generator>
+        </id>
+        <property name="name"/>
+
+
+        <!--constrained="true"表示person引用了idCard的主键作为外键-->
+        <!-- one-to-one指示hibernate如何加载其关联对象，默认根据主键加载
+            也就是拿到关系字段值，根据对端的主键来加载关联对象
+         -->
+        <one-to-one name="idCard" constrained="true"/>
+    </class>
+</hibernate-mapping>
