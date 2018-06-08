@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!--onetooneprimarykey-->
+    <!--<class name="Hibernate_demo1.com.fendo.Entity.StudyCode" table="one_to_one_primary_study_code">-->
+        <!--<id name="id" column="id">-->
+            <!--<generator class="foreign">-->
+                <!--<param name="property">student</param>-->
+            <!--</generator>-->
+        <!--</id>-->
+        <!--<property name="identifyCode" column="identify_code"/>-->
+        <!--<one-to-one name="student" constrained="true"  />-->
+    <!--</class>-->
+
+    <!--onetooneforeignkey-->
+    <class name="Hibernate_demo1.com.fendo.Entity.StudyCode" table="one_to_one_foreign_study_code">
+        <id name="id" column="id">
+            <generator class="increment"></generator>
+        </id>
+        <property name="identifyCode" column="identify_code"/>
+        <many-to-one name="student" column="student_id" unique="true" cascade="save-update"/>
+    </class>
+</hibernate-mapping>

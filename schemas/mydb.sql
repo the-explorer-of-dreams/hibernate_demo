@@ -16,6 +16,17 @@
 CREATE DATABASE IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `mydb`;
 
+-- 导出  表 mydb.classes 结构
+CREATE TABLE IF NOT EXISTS `classes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.classes 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `classes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `classes` ENABLE KEYS */;
+
 -- 导出  表 mydb.department 结构
 CREATE TABLE IF NOT EXISTS `department` (
   `DEPT_ID` int(11) NOT NULL,
@@ -82,11 +93,67 @@ CREATE TABLE IF NOT EXISTS `idcard` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.idcard 的数据：~0 rows (大约)
+-- 正在导出表  mydb.idcard 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `idcard` DISABLE KEYS */;
 INSERT INTO `idcard` (`id`, `cardNum`) VALUES
-	('4028b88163d9a97f0163d9a983280000', '111111111');
+	('4028b88163ddab780163ddab7d560000', '111111111');
 /*!40000 ALTER TABLE `idcard` ENABLE KEYS */;
+
+-- 导出  表 mydb.one_to_one_foreign_student 结构
+CREATE TABLE IF NOT EXISTS `one_to_one_foreign_student` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.one_to_one_foreign_student 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `one_to_one_foreign_student` DISABLE KEYS */;
+INSERT INTO `one_to_one_foreign_student` (`id`, `name`, `class_id`) VALUES
+	(1, 'william', 1);
+/*!40000 ALTER TABLE `one_to_one_foreign_student` ENABLE KEYS */;
+
+-- 导出  表 mydb.one_to_one_foreign_study_code 结构
+CREATE TABLE IF NOT EXISTS `one_to_one_foreign_study_code` (
+  `id` int(11) NOT NULL,
+  `identify_code` varchar(50) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  KEY `FKawh0txugiibwx50boaiouotei` (`student_id`),
+  CONSTRAINT `FKawh0txugiibwx50boaiouotei` FOREIGN KEY (`student_id`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.one_to_one_foreign_study_code 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `one_to_one_foreign_study_code` DISABLE KEYS */;
+/*!40000 ALTER TABLE `one_to_one_foreign_study_code` ENABLE KEYS */;
+
+-- 导出  表 mydb.one_to_one_primary_student 结构
+CREATE TABLE IF NOT EXISTS `one_to_one_primary_student` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.one_to_one_primary_student 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `one_to_one_primary_student` DISABLE KEYS */;
+INSERT INTO `one_to_one_primary_student` (`id`, `name`, `class_id`) VALUES
+	(1, 'william', 1);
+/*!40000 ALTER TABLE `one_to_one_primary_student` ENABLE KEYS */;
+
+-- 导出  表 mydb.one_to_one_primary_study_code 结构
+CREATE TABLE IF NOT EXISTS `one_to_one_primary_study_code` (
+  `id` int(11) NOT NULL,
+  `identify_code` varchar(50) DEFAULT NULL,
+  KEY `FKgbnkhyu46gk8erwj8j1sip54c` (`id`),
+  CONSTRAINT `FKgbnkhyu46gk8erwj8j1sip54c` FOREIGN KEY (`id`) REFERENCES `one_to_one_primary_student` (`id`),
+  CONSTRAINT `FKlu7ydj3xt8muqcg72rogrmpis` FOREIGN KEY (`id`) REFERENCES `one_to_one_primary_student` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.one_to_one_primary_study_code 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `one_to_one_primary_study_code` DISABLE KEYS */;
+INSERT INTO `one_to_one_primary_study_code` (`id`, `identify_code`) VALUES
+	(1, '20180001');
+/*!40000 ALTER TABLE `one_to_one_primary_study_code` ENABLE KEYS */;
 
 -- 导出  表 mydb.person 结构
 CREATE TABLE IF NOT EXISTS `person` (
@@ -96,10 +163,10 @@ CREATE TABLE IF NOT EXISTS `person` (
   CONSTRAINT `FK9w0sw9mmegr3k2fq8xg0q0t1q` FOREIGN KEY (`id`) REFERENCES `idcard` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.person 的数据：~0 rows (大约)
+-- 正在导出表  mydb.person 的数据：~1 rows (大约)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
 INSERT INTO `person` (`id`, `name`) VALUES
-	('4028b88163d9a97f0163d9a983280000', '张三');
+	('4028b88163ddab780163ddab7d560000', '张三');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 
 -- 导出  表 mydb.salary_grade 结构
@@ -110,11 +177,25 @@ CREATE TABLE IF NOT EXISTS `salary_grade` (
   PRIMARY KEY (`GRADE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.salary_grade 的数据：~1 rows (大约)
+-- 正在导出表  mydb.salary_grade 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `salary_grade` DISABLE KEYS */;
 INSERT INTO `salary_grade` (`GRADE`, `HIGH_SALARY`, `LOW_SALARY`) VALUES
 	(1, 9999, 3001);
 /*!40000 ALTER TABLE `salary_grade` ENABLE KEYS */;
+
+-- 导出  表 mydb.student 结构
+CREATE TABLE IF NOT EXISTS `student` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKnsl7w2nw6o6eq53hqlxfcijpm` (`class_id`),
+  CONSTRAINT `FKnsl7w2nw6o6eq53hqlxfcijpm` FOREIGN KEY (`class_id`) REFERENCES `classes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.student 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
 
 -- 导出  表 mydb.timekeeper 结构
 CREATE TABLE IF NOT EXISTS `timekeeper` (
@@ -130,6 +211,16 @@ CREATE TABLE IF NOT EXISTS `timekeeper` (
 -- 正在导出表  mydb.timekeeper 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `timekeeper` DISABLE KEYS */;
 /*!40000 ALTER TABLE `timekeeper` ENABLE KEYS */;
+
+-- 导出  表 mydb.t_classes 结构
+CREATE TABLE IF NOT EXISTS `t_classes` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.t_classes 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `t_classes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t_classes` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

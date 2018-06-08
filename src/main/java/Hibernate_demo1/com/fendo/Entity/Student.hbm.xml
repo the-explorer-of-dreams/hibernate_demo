@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!--one to one primarykey-->
+    <!--<class name="Hibernate_demo1.com.fendo.Entity.Student" table="one_to_one_primary_student">-->
+        <!--<id name="id" column="id">-->
+            <!--<generator class="increment"></generator>-->
+        <!--</id>-->
+        <!--<property name="name" column="name"/>-->
+        <!--<property name="classId" column="class_id"/>-->
+        <!--<one-to-one name="studyCode"  cascade="save-update"/>-->
+    <!--</class>-->
+    <!--one to one foreignkey-->
+    <!--<class name="Hibernate_demo1.com.fendo.Entity.Student" table="one_to_one_foreign_student">-->
+        <!--<id name="id" column="id">-->
+            <!--<generator class="increment"></generator>-->
+        <!--</id>-->
+        <!--<property name="name" column="name"/>-->
+        <!--<property name="classId" column="class_id"/>-->
+        <!--<one-to-one name="studyCode" property-ref="student" class="Hibernate_demo1.com.fendo.Entity.StudyCode"  />-->
+    <!--</class>-->
+
+    <class name="Hibernate_demo1.com.fendo.Entity.Student" table="student">
+        <id name="id" column="id">
+            <generator class="increment"></generator>
+        </id>
+        <property name="name" column="name"/>
+        <many-to-one name="classes" column="class_id"/>
+        <!--<one-to-one name="studyCode" property-ref="student" class="Hibernate_demo1.com.fendo.Entity.StudyCode"  />-->
+    </class>
+</hibernate-mapping>
