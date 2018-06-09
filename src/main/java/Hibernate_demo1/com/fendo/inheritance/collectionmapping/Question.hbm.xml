@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <!--<class name="Hibernate_demo1.com.fendo.inheritance.collectionmapping.Question" table="q100">-->
+        <!--<id name="id">-->
+            <!--<generator class="increment"></generator>-->
+        <!--</id>-->
+        <!--<property name="qname"></property>-->
+
+        <!--&lt;!&ndash;<list name="answers" table="ans100">&ndash;&gt;-->
+            <!--&lt;!&ndash;<key column="qid"></key>&ndash;&gt;-->
+            <!--&lt;!&ndash;<index column="type"></index>&ndash;&gt;-->
+            <!--&lt;!&ndash;<element column="answer" type="string"></element>&ndash;&gt;-->
+        <!--&lt;!&ndash;</list>&ndash;&gt;-->
+
+        <!--<bag name="answers" table="ans100">-->
+            <!--<key column="qid"></key>-->
+            <!--<element column="answer" type="string"></element>-->
+        <!--</bag>-->
+
+    <!--</class>-->
+
+    <class name="Hibernate_demo1.com.fendo.inheritance.collectionmapping.Question" table="question_m2m">
+        <id name="id">
+            <generator class="native"></generator>
+        </id>
+        <property name="name"></property>
+
+        <map name="answers" table="answer_m2m" cascade="all">
+            <key column="questionid"></key>
+            <index column="answer" type="string"></index>
+            <many-to-many class="Hibernate_demo1.com.fendo.inheritance.collectionmapping.User" column="userid"></many-to-many>
+        </map>
+    </class>
+</hibernate-mapping>

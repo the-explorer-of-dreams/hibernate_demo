@@ -65,12 +65,17 @@
         <!-- 引入ORM 映射文件
             填写src之后的路径
          -->
-        <mapping resource="Hibernate_demo1/com/fendo/Entity/IdCard.hbm.xml"/>
-        <mapping resource="Hibernate_demo1/com/fendo/Entity/Person.hbm.xml"/>
         <mapping resource="Hibernate_demo1/com/fendo/Entity/Student.hbm.xml"/>
         <mapping resource="Hibernate_demo1/com/fendo/Entity/StudyCode.hbm.xml"/>
         <mapping resource="Hibernate_demo1/com/fendo/Entity/Classes.hbm.xml"/>
         <mapping resource="Hibernate_demo1/com/fendo/Entity/Course.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/inheritance/hierarchy/Employee.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/inheritance/collectionmapping/Question.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/inheritance/collectionmapping/User.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/inheritance/componentmapping/EmployeeComponent.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/inheritance/onetoonebyforeignkey/AddressOneToOne.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/inheritance/onetoonebyforeignkey/EmployeeOneToOne.hbm.xml"/>
 
+        <mapping class="Hibernate_demo1.com.fendo.inheritance.namedquery.EmployeeNamedQuery"/>
     </session-factory>
 </hibernate-configuration>

@@ -16,6 +16,60 @@
 CREATE DATABASE IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `mydb`;
 
+-- 导出  表 mydb.address_2110 结构
+CREATE TABLE IF NOT EXISTS `address_2110` (
+  `addressId` int(11) NOT NULL,
+  `addressLine1` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`addressId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.address_2110 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `address_2110` DISABLE KEYS */;
+INSERT INTO `address_2110` (`addressId`, `addressLine1`, `city`, `state`, `country`) VALUES
+	(1, '1688, RenMin Road', 'Haikou', 'Hainan', 'China');
+/*!40000 ALTER TABLE `address_2110` ENABLE KEYS */;
+
+-- 导出  表 mydb.ans100 结构
+CREATE TABLE IF NOT EXISTS `ans100` (
+  `qid` int(11) DEFAULT NULL,
+  `answer` varchar(255) DEFAULT NULL,
+  KEY `FKe91okfiu2ylscbr4irv60aq62` (`qid`),
+  CONSTRAINT `FKe91okfiu2ylscbr4irv60aq62` FOREIGN KEY (`qid`) REFERENCES `q100` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.ans100 的数据：~5 rows (大约)
+/*!40000 ALTER TABLE `ans100` DISABLE KEYS */;
+INSERT INTO `ans100` (`qid`, `answer`) VALUES
+	(1, 'java is a programming language'),
+	(1, 'java is a platform'),
+	(1, 'java is a JVM.'),
+	(2, 'Servlet is an Interface'),
+	(2, 'Servlet is an API');
+/*!40000 ALTER TABLE `ans100` ENABLE KEYS */;
+
+-- 导出  表 mydb.answer_m2m 结构
+CREATE TABLE IF NOT EXISTS `answer_m2m` (
+  `questionid` int(11) NOT NULL,
+  `answer` varchar(255) NOT NULL,
+  `userid` int(11) NOT NULL,
+  PRIMARY KEY (`questionid`,`answer`),
+  KEY `FKkwn39v22curkbevluik274npg` (`userid`),
+  CONSTRAINT `FK7cy207rewp4u6fbkjekvuyo5` FOREIGN KEY (`questionid`) REFERENCES `question_m2m` (`id`),
+  CONSTRAINT `FKkwn39v22curkbevluik274npg` FOREIGN KEY (`userid`) REFERENCES `user_m2m` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.answer_m2m 的数据：~4 rows (大约)
+/*!40000 ALTER TABLE `answer_m2m` DISABLE KEYS */;
+INSERT INTO `answer_m2m` (`questionid`, `answer`, `userid`) VALUES
+	(1, 'java is a programming language', 1),
+	(1, 'java is a platform', 2),
+	(2, 'servlet technology is a server side programming', 3),
+	(2, 'Servlet is an Interface', 4);
+/*!40000 ALTER TABLE `answer_m2m` ENABLE KEYS */;
+
 -- 导出  表 mydb.classes 结构
 CREATE TABLE IF NOT EXISTS `classes` (
   `id` int(11) NOT NULL,
@@ -23,81 +77,151 @@ CREATE TABLE IF NOT EXISTS `classes` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.classes 的数据：~1 rows (大约)
+-- 正在导出表  mydb.classes 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `classes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `classes` ENABLE KEYS */;
 
--- 导出  表 mydb.department 结构
-CREATE TABLE IF NOT EXISTS `department` (
-  `DEPT_ID` int(11) NOT NULL,
-  `DEPT_NAME` varchar(255) NOT NULL,
-  `DEPT_NO` varchar(20) NOT NULL,
-  `LOCATION` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`DEPT_ID`),
-  UNIQUE KEY `DEPT_NO` (`DEPT_NO`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  mydb.department 的数据：~4 rows (大约)
-/*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` (`DEPT_ID`, `DEPT_NAME`, `DEPT_NO`, `LOCATION`) VALUES
-	(10, 'ACCOUNTING', 'D10', 'NEW YORK'),
-	(20, 'RESEARCH', 'D20', 'DALLAS'),
-	(30, 'SALES', 'D30', 'CHICAGO'),
-	(40, 'OPERATIONS', 'D40', 'BOSTON');
-/*!40000 ALTER TABLE `department` ENABLE KEYS */;
-
--- 导出  表 mydb.employee 结构
-CREATE TABLE IF NOT EXISTS `employee` (
-  `EMP_ID` bigint(20) NOT NULL,
-  `EMP_NAME` varchar(50) NOT NULL,
-  `EMP_NO` varchar(20) NOT NULL,
-  `HIRE_DATE` date NOT NULL,
-  `IMAGE` longblob,
-  `JOB` varchar(30) NOT NULL,
-  `SALARY` float NOT NULL,
-  `DEPT_ID` int(11) NOT NULL,
-  `MNG_ID` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`EMP_ID`),
-  UNIQUE KEY `EMP_NO` (`EMP_NO`),
-  KEY `FK75C8D6AE269A3C9` (`DEPT_ID`),
-  KEY `FK75C8D6AE6106A42` (`EMP_ID`),
-  KEY `FK75C8D6AE13C12F64` (`MNG_ID`),
-  CONSTRAINT `FK75C8D6AE13C12F64` FOREIGN KEY (`MNG_ID`) REFERENCES `employee` (`EMP_ID`),
-  CONSTRAINT `FK75C8D6AE269A3C9` FOREIGN KEY (`DEPT_ID`) REFERENCES `department` (`DEPT_ID`),
-  CONSTRAINT `FK75C8D6AE6106A42` FOREIGN KEY (`EMP_ID`) REFERENCES `employee` (`EMP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  mydb.employee 的数据：~14 rows (大约)
-/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` (`EMP_ID`, `EMP_NAME`, `EMP_NO`, `HIRE_DATE`, `IMAGE`, `JOB`, `SALARY`, `DEPT_ID`, `MNG_ID`) VALUES
-	(7369, 'SMITH', 'E7369', '1980-12-17', NULL, 'CLERK', 800, 20, 7902),
-	(7499, 'ALLEN', 'E7499', '1981-02-20', NULL, 'SALESMAN', 1600, 30, 7698),
-	(7521, 'WARD', 'E7521', '1981-02-22', NULL, 'SALESMAN', 1250, 30, 7698),
-	(7566, 'JONES', 'E7566', '1981-04-02', NULL, 'MANAGER', 2975, 20, 7839),
-	(7654, 'MARTIN', 'E7654', '1981-09-28', NULL, 'SALESMAN', 1250, 30, 7698),
-	(7698, 'BLAKE', 'E7698', '1981-05-01', NULL, 'MANAGER', 2850, 30, 7839),
-	(7782, 'CLARK', 'E7782', '1981-06-09', NULL, 'MANAGER', 2450, 30, 7839),
-	(7788, 'SCOTT', 'E7788', '1987-04-19', NULL, 'ANALYST', 3000, 20, 7566),
-	(7839, 'KING', 'E7839', '1981-11-17', NULL, 'PRESIDENT', 5000, 10, NULL),
-	(7844, 'TURNER', 'E7844', '1981-09-08', NULL, 'SALESMAN', 1500, 30, 7698),
-	(7876, 'ADAMS', 'E7876', '1987-05-23', NULL, 'CLERK', 1100, 20, 7698),
-	(7900, 'ADAMS', 'E7900', '1981-12-03', NULL, 'CLERK', 950, 30, 7698),
-	(7902, 'FORD', 'E7902', '1981-12-03', NULL, 'ANALYST', 3000, 20, 7566),
-	(7934, 'MILLER', 'E7934', '1982-01-23', NULL, 'CLERK', 1300, 10, 7698);
-/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
-
--- 导出  表 mydb.idcard 结构
-CREATE TABLE IF NOT EXISTS `idcard` (
-  `id` varchar(255) NOT NULL,
-  `cardNum` varchar(333) DEFAULT NULL,
+-- 导出  表 mydb.contemp122 结构
+CREATE TABLE IF NOT EXISTS `contemp122` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `pay_per_hour` float DEFAULT NULL,
+  `contract_duration` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.idcard 的数据：~1 rows (大约)
-/*!40000 ALTER TABLE `idcard` DISABLE KEYS */;
-INSERT INTO `idcard` (`id`, `cardNum`) VALUES
-	('4028b88163ddab780163ddab7d560000', '111111111');
-/*!40000 ALTER TABLE `idcard` ENABLE KEYS */;
+-- 正在导出表  mydb.contemp122 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `contemp122` DISABLE KEYS */;
+INSERT INTO `contemp122` (`id`, `name`, `pay_per_hour`, `contract_duration`) VALUES
+	(3, 'Hippo su', 1000, '15 hours');
+/*!40000 ALTER TABLE `contemp122` ENABLE KEYS */;
+
+-- 导出  表 mydb.contemp123 结构
+CREATE TABLE IF NOT EXISTS `contemp123` (
+  `contract_id` int(11) NOT NULL,
+  `pay_per_hour` float DEFAULT NULL,
+  `contract_duration` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`contract_id`),
+  CONSTRAINT `FK53vmg86dre19ngd11wl8xrbx9` FOREIGN KEY (`contract_id`) REFERENCES `emp123` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.contemp123 的数据：~3 rows (大约)
+/*!40000 ALTER TABLE `contemp123` DISABLE KEYS */;
+INSERT INTO `contemp123` (`contract_id`, `pay_per_hour`, `contract_duration`) VALUES
+	(3, 1000, '15 hours'),
+	(6, 1000, '15 hours'),
+	(9, 1000, '15 hours');
+/*!40000 ALTER TABLE `contemp123` ENABLE KEYS */;
+
+-- 导出  表 mydb.course 结构
+CREATE TABLE IF NOT EXISTS `course` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.course 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `course` DISABLE KEYS */;
+/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+
+-- 导出  表 mydb.course_student 结构
+CREATE TABLE IF NOT EXISTS `course_student` (
+  `c_id` int(11) DEFAULT NULL,
+  `s_id` int(11) DEFAULT NULL,
+  KEY `FKfs002jd3jstb4lh420id8nrwv` (`c_id`),
+  KEY `FKmuyfjj2rpydkbfeyrp1xcmgbo` (`s_id`),
+  CONSTRAINT `FKfs002jd3jstb4lh420id8nrwv` FOREIGN KEY (`c_id`) REFERENCES `course` (`id`),
+  CONSTRAINT `FKmuyfjj2rpydkbfeyrp1xcmgbo` FOREIGN KEY (`s_id`) REFERENCES `student` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.course_student 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `course_student` DISABLE KEYS */;
+/*!40000 ALTER TABLE `course_student` ENABLE KEYS */;
+
+-- 导出  表 mydb.emp121 结构
+CREATE TABLE IF NOT EXISTS `emp121` (
+  `id` int(11) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `salary` float DEFAULT NULL,
+  `bonus` int(11) DEFAULT NULL,
+  `pay_per_hour` float DEFAULT NULL,
+  `contract_duration` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.emp121 的数据：~3 rows (大约)
+/*!40000 ALTER TABLE `emp121` DISABLE KEYS */;
+INSERT INTO `emp121` (`id`, `type`, `name`, `salary`, `bonus`, `pay_per_hour`, `contract_duration`) VALUES
+	(1, 'emp', 'Yiibai', NULL, NULL, NULL, NULL),
+	(2, 'reg_emp', 'Max su', 50000, 5, NULL, NULL),
+	(3, 'con_emp', 'Hippo su', NULL, NULL, 1000, '15 hours');
+/*!40000 ALTER TABLE `emp121` ENABLE KEYS */;
+
+-- 导出  表 mydb.emp122 结构
+CREATE TABLE IF NOT EXISTS `emp122` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.emp122 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `emp122` DISABLE KEYS */;
+INSERT INTO `emp122` (`id`, `name`) VALUES
+	(1, 'Yiibai');
+/*!40000 ALTER TABLE `emp122` ENABLE KEYS */;
+
+-- 导出  表 mydb.emp123 结构
+CREATE TABLE IF NOT EXISTS `emp123` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.emp123 的数据：~9 rows (大约)
+/*!40000 ALTER TABLE `emp123` DISABLE KEYS */;
+INSERT INTO `emp123` (`id`, `name`) VALUES
+	(1, 'Yiibai'),
+	(2, 'Max su'),
+	(3, 'Hippo su'),
+	(4, 'Yiibai'),
+	(5, 'Max su'),
+	(6, 'Hippo su'),
+	(7, 'Yiibai'),
+	(8, 'Max su'),
+	(9, 'Hippo su');
+/*!40000 ALTER TABLE `emp123` ENABLE KEYS */;
+
+-- 导出  表 mydb.emp_2110 结构
+CREATE TABLE IF NOT EXISTS `emp_2110` (
+  `employeeId` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `address` int(11) DEFAULT NULL,
+  PRIMARY KEY (`employeeId`),
+  UNIQUE KEY `UK_o59xt2yukiefdxhv7bx8u0o3a` (`address`),
+  CONSTRAINT `FKplaygd7gpfedy290hg81wi1ba` FOREIGN KEY (`address`) REFERENCES `address_2110` (`addressId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.emp_2110 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `emp_2110` DISABLE KEYS */;
+INSERT INTO `emp_2110` (`employeeId`, `name`, `email`, `address`) VALUES
+	(1, 'Max Su', 'maxsu@gmail.com', 1);
+/*!40000 ALTER TABLE `emp_2110` ENABLE KEYS */;
+
+-- 导出  表 mydb.emp_cpmap 结构
+CREATE TABLE IF NOT EXISTS `emp_cpmap` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `pincode` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.emp_cpmap 的数据：~0 rows (大约)
+/*!40000 ALTER TABLE `emp_cpmap` DISABLE KEYS */;
+/*!40000 ALTER TABLE `emp_cpmap` ENABLE KEYS */;
 
 -- 导出  表 mydb.one_to_one_foreign_student 结构
 CREATE TABLE IF NOT EXISTS `one_to_one_foreign_student` (
@@ -107,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `one_to_one_foreign_student` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.one_to_one_foreign_student 的数据：~1 rows (大约)
+-- 正在导出表  mydb.one_to_one_foreign_student 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `one_to_one_foreign_student` DISABLE KEYS */;
 INSERT INTO `one_to_one_foreign_student` (`id`, `name`, `class_id`) VALUES
 	(1, 'william', 1);
@@ -149,39 +273,71 @@ CREATE TABLE IF NOT EXISTS `one_to_one_primary_study_code` (
   CONSTRAINT `FKlu7ydj3xt8muqcg72rogrmpis` FOREIGN KEY (`id`) REFERENCES `one_to_one_primary_student` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.one_to_one_primary_study_code 的数据：~1 rows (大约)
+-- 正在导出表  mydb.one_to_one_primary_study_code 的数据：~0 rows (大约)
 /*!40000 ALTER TABLE `one_to_one_primary_study_code` DISABLE KEYS */;
 INSERT INTO `one_to_one_primary_study_code` (`id`, `identify_code`) VALUES
 	(1, '20180001');
 /*!40000 ALTER TABLE `one_to_one_primary_study_code` ENABLE KEYS */;
 
--- 导出  表 mydb.person 结构
-CREATE TABLE IF NOT EXISTS `person` (
-  `id` varchar(255) NOT NULL,
+-- 导出  表 mydb.q100 结构
+CREATE TABLE IF NOT EXISTS `q100` (
+  `id` int(11) NOT NULL,
+  `qname` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.q100 的数据：~2 rows (大约)
+/*!40000 ALTER TABLE `q100` DISABLE KEYS */;
+INSERT INTO `q100` (`id`, `qname`) VALUES
+	(1, 'Java 是什么?'),
+	(2, 'Hibernate 是什么?');
+/*!40000 ALTER TABLE `q100` ENABLE KEYS */;
+
+-- 导出  表 mydb.question_m2m 结构
+CREATE TABLE IF NOT EXISTS `question_m2m` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `FK9w0sw9mmegr3k2fq8xg0q0t1q` FOREIGN KEY (`id`) REFERENCES `idcard` (`id`)
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  mydb.question_m2m 的数据：~2 rows (大约)
+/*!40000 ALTER TABLE `question_m2m` DISABLE KEYS */;
+INSERT INTO `question_m2m` (`id`, `name`) VALUES
+	(1, 'Java是什么?'),
+	(2, 'Servlet是什么?');
+/*!40000 ALTER TABLE `question_m2m` ENABLE KEYS */;
+
+-- 导出  表 mydb.regemp122 结构
+CREATE TABLE IF NOT EXISTS `regemp122` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `salary` float DEFAULT NULL,
+  `bonus` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.person 的数据：~1 rows (大约)
-/*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` (`id`, `name`) VALUES
-	('4028b88163ddab780163ddab7d560000', '张三');
-/*!40000 ALTER TABLE `person` ENABLE KEYS */;
+-- 正在导出表  mydb.regemp122 的数据：~1 rows (大约)
+/*!40000 ALTER TABLE `regemp122` DISABLE KEYS */;
+INSERT INTO `regemp122` (`id`, `name`, `salary`, `bonus`) VALUES
+	(2, 'Max su', 50000, 5);
+/*!40000 ALTER TABLE `regemp122` ENABLE KEYS */;
 
--- 导出  表 mydb.salary_grade 结构
-CREATE TABLE IF NOT EXISTS `salary_grade` (
-  `GRADE` int(11) NOT NULL,
-  `HIGH_SALARY` float NOT NULL,
-  `LOW_SALARY` float NOT NULL,
-  PRIMARY KEY (`GRADE`)
+-- 导出  表 mydb.regemp123 结构
+CREATE TABLE IF NOT EXISTS `regemp123` (
+  `regular_id` int(11) NOT NULL,
+  `salary` float DEFAULT NULL,
+  `bonus` int(11) DEFAULT NULL,
+  PRIMARY KEY (`regular_id`),
+  CONSTRAINT `FKn7kwhqm9kv8sfmm08dsxx1v4d` FOREIGN KEY (`regular_id`) REFERENCES `emp123` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.salary_grade 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `salary_grade` DISABLE KEYS */;
-INSERT INTO `salary_grade` (`GRADE`, `HIGH_SALARY`, `LOW_SALARY`) VALUES
-	(1, 9999, 3001);
-/*!40000 ALTER TABLE `salary_grade` ENABLE KEYS */;
+-- 正在导出表  mydb.regemp123 的数据：~3 rows (大约)
+/*!40000 ALTER TABLE `regemp123` DISABLE KEYS */;
+INSERT INTO `regemp123` (`regular_id`, `salary`, `bonus`) VALUES
+	(2, 50000, 5),
+	(5, 50000, 5),
+	(8, 50000, 5);
+/*!40000 ALTER TABLE `regemp123` ENABLE KEYS */;
 
 -- 导出  表 mydb.student 结构
 CREATE TABLE IF NOT EXISTS `student` (
@@ -197,30 +353,23 @@ CREATE TABLE IF NOT EXISTS `student` (
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 
--- 导出  表 mydb.timekeeper 结构
-CREATE TABLE IF NOT EXISTS `timekeeper` (
-  `Timekeeper_Id` varchar(36) NOT NULL,
-  `Date_Time` datetime NOT NULL,
-  `In_Out` char(1) NOT NULL,
-  `EMP_ID` bigint(20) NOT NULL,
-  PRIMARY KEY (`Timekeeper_Id`),
-  KEY `FK744D9BFF6106A42` (`EMP_ID`),
-  CONSTRAINT `FK744D9BFF6106A42` FOREIGN KEY (`EMP_ID`) REFERENCES `employee` (`EMP_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+-- 导出  表 mydb.user_m2m 结构
+CREATE TABLE IF NOT EXISTS `user_m2m` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- 正在导出表  mydb.timekeeper 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `timekeeper` DISABLE KEYS */;
-/*!40000 ALTER TABLE `timekeeper` ENABLE KEYS */;
-
--- 导出  表 mydb.t_classes 结构
-CREATE TABLE IF NOT EXISTS `t_classes` (
-  `id` int(11) NOT NULL,
-  `name` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 正在导出表  mydb.t_classes 的数据：~0 rows (大约)
-/*!40000 ALTER TABLE `t_classes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `t_classes` ENABLE KEYS */;
+-- 正在导出表  mydb.user_m2m 的数据：~4 rows (大约)
+/*!40000 ALTER TABLE `user_m2m` DISABLE KEYS */;
+INSERT INTO `user_m2m` (`id`, `username`, `email`, `country`) VALUES
+	(1, '张小哥', 'user2@gmail.com', 'usa'),
+	(2, '王达叔', 'user1@gmail.com', 'China'),
+	(3, 'John Milton', 'john.su@gmail.com', 'usa'),
+	(4, 'Ashok Kumar', 'as-top@gmail.com', 'China');
+/*!40000 ALTER TABLE `user_m2m` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

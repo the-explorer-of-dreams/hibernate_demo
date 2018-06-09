@@ -8,7 +8,7 @@
             <generator class="increment"></generator>
         </id>
         <property name="name" column="name"/>
-        <set name="studentsSet" lazy="true" inverse="true" cascade="save-update">
+        <set name="studentsSet"  lazy="true" inverse="true" cascade="save-update">
             <key column="class_id"></key>
             <one-to-many class="Hibernate_demo1.com.fendo.Entity.Student" ></one-to-many>
         </set>
