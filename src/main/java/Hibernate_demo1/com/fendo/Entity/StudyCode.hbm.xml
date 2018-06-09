@@ -20,6 +20,6 @@
             <generator class="increment"></generator>
         </id>
         <property name="identifyCode" column="identify_code"/>
-        <many-to-one name="student" column="student_id" unique="true" cascade="save-update"/>
+        <many-to-one name="student" class="Hibernate_demo1.com.fendo.Entity.Student" column="student_id"  unique="true" cascade="save-update"/>
     </class>
 </hibernate-mapping>

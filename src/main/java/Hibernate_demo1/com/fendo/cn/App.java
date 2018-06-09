@@ -28,7 +28,8 @@ public class App {
             //oneToOnePrimaryKey(session);
             //oneToOne(session);
 
-            oneToMany(session);
+//            oneToMany(session);
+            manToMany(session);
 
 
             session.getTransaction().commit();
@@ -88,21 +89,53 @@ public class App {
 
         Student student = new Student();
         student.setName("william");
-//        student.setClasses(classes);
+        student.setClasses(classes);
 
-/*
 
         StudyCode studyCode = new StudyCode();
         studyCode.setIdentifyCode("20180001");
         studyCode.setStudent(student);
 
-        student.setStudyCode(studyCode);*/
-        Set<Student> studentSet = new HashSet<Student>() ;
-        studentSet.add(student);
-        classes.setStudentsSet(studentSet);
+        student.setStudyCode(studyCode);
+//        Set<Student> studentSet = new HashSet<Student>() ;
+//        studentSet.add(student);
+//        classes.setStudentsSet(studentSet);
 
-        session.save(classes);
-//        session.save(student);
+//        session.save(classes);
+        session.save(student);
+//        session.save(studyCode);
+
+//        Student queryStudent = (Student)session.get(Student.class,1);
+//
+//        System.out.println("queryStudent RESULT;"+queryStudent.getClasses().getName());
+//
+//        Classes queryClasses = (Classes)session.get(Classes.class,1);
+//
+//        System.out.println("queryClasses RESULT;"+queryClasses.getStudentsSet());
+
+    }
+
+    public static void manToMany(Session session) {
+        Classes classes =  new Classes();
+        classes.setName("class-no-1");
+
+        Student student = new Student();
+        student.setName("william");
+        student.setClasses(classes);
+
+
+        StudyCode studyCode = new StudyCode();
+        studyCode.setIdentifyCode("20180001");
+        studyCode.setStudent(student);
+
+        Course course =  new Course();
+        course.setName("ENGLISH");
+
+
+        student.setStudyCode(studyCode);
+        student.getCoursesSet().add(course);
+        session.save(student);
+
 
 //        Student queryStudent = (Student)session.get(Student.class,1);
 //

@@ -70,5 +70,7 @@
         <mapping resource="Hibernate_demo1/com/fendo/Entity/Student.hbm.xml"/>
         <mapping resource="Hibernate_demo1/com/fendo/Entity/StudyCode.hbm.xml"/>
         <mapping resource="Hibernate_demo1/com/fendo/Entity/Classes.hbm.xml"/>
+        <mapping resource="Hibernate_demo1/com/fendo/Entity/Course.hbm.xml"/>
+
     </session-factory>
 </hibernate-configuration>

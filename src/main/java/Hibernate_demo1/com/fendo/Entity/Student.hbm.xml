@@ -27,7 +27,11 @@
             <generator class="increment"></generator>
         </id>
         <property name="name" column="name"/>
-        <many-to-one name="classes" column="class_id"/>
-        <!--<one-to-one name="studyCode" property-ref="student" class="Hibernate_demo1.com.fendo.Entity.StudyCode"  />-->
+        <many-to-one name="classes" class="Hibernate_demo1.com.fendo.Entity.Classes" column="class_id" cascade="save-update,persist"/>
+        <one-to-one name="studyCode" property-ref="student" class="Hibernate_demo1.com.fendo.Entity.StudyCode"  cascade="save-update"/>
+        <set name="coursesSet" table="course_student" cascade="save-update">
+            <key column="s_id"></key>
+            <many-to-many class="Hibernate_demo1.com.fendo.Entity.Course" column="c_id" />
+        </set>
     </class>
 </hibernate-mapping>
